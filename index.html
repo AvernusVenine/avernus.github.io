@@ -6,9 +6,8 @@
   <title>Tate Sturm | Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
   <style>
-    /* Particles background */
+    /* Particles container styling */
     #tsparticles {
       position: fixed;
       top: 0;
@@ -16,76 +15,477 @@
       width: 100%;
       height: 100%;
       z-index: -1;
-      background: #111; /* dark background */
+      pointer-events: auto;
+    }
+    
+    /* Content should be above particles */
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      padding-top: 80px;
+      width: 100%;
+      max-width: 6xl;
+      margin: 0 auto;
+    }
+    
+    /* Fixed navigation bar */
+    .nav-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none; /* Hide the navigation bar */
+    }
+    
+    /* Profile picture interactions */
+    .profile-pic {
+      cursor: pointer;
+      transition: all 0.4s ease;
+      border: 3px solid transparent;
+    }
+    
+    .profile-pic:hover {
+      transform: scale(1.05);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    
+    .profile-pic.active {
+      border-color: #3b82f6;
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* Specific sizing for profile pictures */
+    .profile-pic.side {
+      width: 10rem;
+      height: 10rem;
+    }
+    
+    .profile-pic.main {
+      width: 11rem;
+      height: 11rem;
+    }
+    
+    .profile-pic.active.side {
+      width: 11rem;
+      height: 11rem;
+    }
+    
+    .profile-pic.active.main {
+      width: 12rem;
+      height: 12rem;
+    }
+    
+    /* Tag filtering styles */
+    .tag-filter {
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .tag-filter:hover {
+      transform: scale(1.05);
+    }
+    
+    .tag-filter.active {
+      ring-2 ring-blue-400;
+      transform: scale(1.1);
+    }
+    
+    .item-hidden {
+      display: none;
     }
   </style>
-
-  <!-- tsParticles library -->
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
 </head>
-
 <body class="bg-gray-900 text-gray-100 font-sans">
-
   <!-- Particles div -->
   <div id="tsparticles"></div>
-
+  
   <!-- Content wrapper -->
-  <div class="flex items-center justify-center min-h-screen">
-    <div class="max-w-2xl text-center p-8">
-
-      <header class="mb-10" data-aos="fade-up">
-        <h1 class="text-4xl font-bold mb-2">Tate Sturm</h1>
-        <p class="text-lg text-gray-400">Machine Learning • Mathematics • Data Science</p>
-      </header>
-
-      <section class="mb-10" data-aos="fade-up" data-aos-delay="250">
-        <p class="text-gray-300">
-          I love working on machine learning, game AI, and data-driven projects.  
-          This site is where I share my work, ideas, and ways to connect.
-        </p>
+  <div class="content-wrapper min-h-screen">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+      
+      <!-- Profile Pictures Section (No background) -->
+      <section class="mb-12 text-center" data-aos="fade-up">
+        <div class="flex justify-center items-center gap-12 mb-8">
+          <!-- Left cat -->
+          <div class="profile-pic side bg-gray-600 rounded-full flex items-center justify-center text-gray-400 text-base flex-shrink-0" 
+               data-profile="cat1" onclick="switchProfile('cat1')">
+               <img src="images/Leo.webp" alt="Leo" class="rounded-full w-full h-full object-cover">
+          </div>
+          <!-- Main profile picture -->
+          <div class="profile-pic active main bg-gray-600 rounded-full flex items-center justify-center text-gray-400 text-xl flex-shrink-0" 
+               data-profile="human" onclick="switchProfile('human')">
+               <img src="images/Tate.webp" alt="Tate Sturm" class="rounded-full w-full h-full object-cover">
+          </div>
+          <!-- Right cat -->
+          <div class="profile-pic side bg-gray-600 rounded-full flex items-center justify-center text-gray-400 text-base flex-shrink-0" 
+               data-profile="cat2" onclick="switchProfile('cat2')">
+               <img src="images/Andromeda.webp" alt="Andromeda" class="rounded-full w-full h-full object-cover">
+          </div>
+        </div>
+      </section>
+      
+      <!-- About Section with Dynamic Content -->
+      <section id="about" class="mb-8 bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center" data-aos="fade-up" data-aos-delay="100">
+        <!-- Tate About (Default) -->
+        <div id="about-human" class="profile-content">
+          <h1 class="text-4xl font-bold mb-2">Tate Sturm</h1>
+          <p class="text-lg text-gray-400 mb-4">Machine Learning • Mathematics • Data Science</p>
+          <p class="text-gray-300 text-lg">
+            I am a senior at the Univeristy of Minnesota double majoring in Computer Science and Mathematics,
+            with a particular interest in Machine Learning and Number Theory.  I continue to work on
+            a multitude of projects relating to how Machine Learning can be used to simplify or automate
+            repetitive tasks to allow for an easier workload.  In my free time, I persue hobbies like astrophotography,
+            tabletop games, and spending time with my two cats.
+          </p>
+        </div>
+        
+        <!-- Leo About -->
+        <div id="about-cat1" class="profile-content" style="display: none;">
+          <h1 class="text-4xl font-bold mb-2">Leo</h1>
+          <p class="text-lg text-gray-400 mb-4"> Senior Security Consultant • Churu Quality Manager • Part-Time Model</p>
+          <p class="text-gray-300 text-lg">
+            Meet Leo, my first cat hired on in August 2020.
+            Leo provides a cool and collected head in any scenario that arises.
+            From protecting his sister from bigger animals, to shrugging off all the
+            attention his suave coat attracts, he always knows how to keep it low-key.
+            Leo's brave yet friendly demeaner is an invaluable addition to any team.
+          </p>
+        </div>
+        
+        <!-- Andromeda About -->
+        <div id="about-cat2" class="profile-content" style="display: none;">
+          <h1 class="text-4xl font-bold mb-2">Andromeda</h1>
+          <p class="text-lg text-gray-400 mb-4">Cat-Human Translator • Professional Breadmaker • Chief Morale Agent</p>
+          <p class="text-gray-300 text-lg">
+            Meet Andromeda, my second cat hired on in July 2024.
+            Andromeda is not only the smartest cat I have ever met with her ability to utilize
+            preprogammed buttons to communicate, but the most affectionate as well.
+            From running full speed on her cat wheel at 2am, to napping my lap while I program,
+            Andromeda's intelligence and empathy is an invaluable addition to any team.
+          </p>
+        </div>
       </section>
 
-      <section class="mb-10" data-aos="fade-up" data-aos-delay="500">
-        <h2 class="text-2xl font-semibold mb-4">Projects</h2>
-        <ul class="space-y-3">
-          <li><a href="#" class="text-blue-400 hover:text-blue-300 underline">Project 1</a></li>
-          <li><a href="#" class="text-blue-400 hover:text-blue-300 underline">Project 2</a></li>
-        </ul>
+      <!-- Tag Filter Section -->
+      <section class="mb-8 bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center" data-aos="fade-up" data-aos-delay="200">
+        <h3 class="text-lg font-semibold mb-4 text-blue-300">Filter by Tag</h3>
+        <div class="flex flex-wrap gap-2 justify-center">
+          <span class="tag-filter px-3 py-1 text-sm bg-green-600 bg-opacity-70 text-green-200 rounded-full" data-tag="machine-learning">Machine Learning</span>
+          <span class="tag-filter px-3 py-1 text-sm bg-red-600 bg-opacity-70 text-red-200 rounded-full" data-tag="mathematics">Mathematics</span>
+          <span class="tag-filter px-3 py-1 text-sm bg-pink-600 bg-opacity-70 text-pink-200 rounded-full" data-tag="geology">Geology</span>
+          <span class="tag-filter px-3 py-1 text-sm bg-blue-600 bg-opacity-70 text-blue-200 rounded-full" data-tag="python">Python</span>
+          <span class="tag-filter px-3 py-1 text-sm bg-indigo-600 bg-opacity-70 text-indigo-200 rounded-full" data-tag="lua">Lua</span>
+          <span class="tag-filter px-3 py-1 text-sm bg-purple-600 bg-opacity-70 text-purple-200 rounded-full" data-tag="xgboost">XGBoost</span>
+          <span class="tag-filter px-3 py-1 text-sm bg-yellow-600 bg-opacity-70 text-yellow-200 rounded-full" data-tag="neural-networks">Neural Networks</span>
+        </div>
+        <div class="mt-4">
+          <button onclick="clearAllFilters()" class="bg-gray-700 hover:bg-gray-600 text-gray-300 px-4 py-2 rounded-lg text-sm transition-colors duration-200">
+            Show All
+          </button>
+        </div>
       </section>
+      
+      <section id="projects" class="mb-8 bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="300">
+        <h2 class="text-2xl font-semibold mb-6">Projects</h2>
+        <div class="space-y-6">
+          
+          <!-- Project 1 - Image on left -->
+          <div class="project-item bg-gray-700 bg-opacity-60 p-6 rounded-lg border border-gray-600 hover:bg-opacity-80 transition-all duration-300" data-tags="python,machine-learning,geology,xgboost">
+            <h3 class="text-xl font-semibold mb-4 text-blue-300">Minnesota Geologic Stratigraphy Classifier</h3>
+            <div class="flex flex-col md:flex-row gap-4 items-start">
+              <!-- Image placeholder -->
+              <div class="w-full md:w-32 h-24 bg-gray-600 rounded-lg flex items-center justify-center text-gray-400 text-sm flex-shrink-0">
+                <img src="images/strat_project.jpg" alt="Stratigraphy Classifier" class="w-full h-full object-cover rounded-lg">
+              </div>
+              <!-- Content -->
+              <div class="flex-1">
+                <p class="text-gray-300 mb-4">
+                  An XGBoost-based model used to predict stratigraphy codes across Minnesota using well drill records used by the Minnesota Geological Survey (MGS).
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-2 py-1 text-xs bg-blue-600 bg-opacity-70 text-blue-200 rounded-full">Python</span>
+                  <span class="tag-filter px-3 py-1 text-sm bg-green-600 bg-opacity-70 text-green-200 rounded-full">Machine Learning</span>
+                  <span class="tag-filter px-3 py-1 text-sm bg-pink-600 bg-opacity-70 text-pink-200 rounded-full">Geology</span>
+                  <span class="tag-filter px-3 py-1 text-sm bg-purple-600 bg-opacity-70 text-purple-200 rounded-full">XGBoost</span>
+                </div>
+                <!-- Links -->
+                <div class="flex gap-3">
+                  <a href="#" class="text-blue-400 hover:text-blue-300 underline text-sm">Publication</a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <section data-aos="fade-up" data-aos-delay="750">
+          <!-- Project 2 - Image on right -->
+          <div class="project-item bg-gray-700 bg-opacity-60 p-6 rounded-lg border border-gray-600 hover:bg-opacity-80 transition-all duration-300" data-tags="python,machine-learning,geology,xgboost">
+            <h3 class="text-xl font-semibold mb-4 text-blue-300">Minnesota Glacial Units and Geochemistry</h3>
+            <div class="flex flex-col md:flex-row-reverse gap-4 items-start">
+              <!-- Image placeholder -->
+              <div class="w-full md:w-32 h-24 bg-gray-600 rounded-lg flex items-center justify-center text-gray-400 text-sm flex-shrink-0">
+                <img src="images/geochem_project.jpg" alt="Geochemistry Study" class="w-full h-full object-cover rounded-lg">
+              </div>
+              <!-- Content -->
+              <div class="flex-1">
+                <p class="text-gray-300 mb-4">
+                  Research into the relationship between Glacial Units across the state of Minnesota and their respective Geochemistry through a machine learning lens.
+                </p>
+                <!-- Tags -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                  <span class="px-2 py-1 text-xs bg-blue-600 bg-opacity-70 text-blue-200 rounded-full">Python</span>
+                  <span class="tag-filter px-3 py-1 text-sm bg-green-600 bg-opacity-70 text-green-200 rounded-full">Machine Learning</span>
+                  <span class="tag-filter px-3 py-1 text-sm bg-pink-600 bg-opacity-70 text-pink-200 rounded-full">Geology</span>
+                  <span class="tag-filter px-3 py-1 text-sm bg-purple-600 bg-opacity-70 text-purple-200 rounded-full">XGBoost</span>
+                </div>
+                <!-- Links -->
+                <div class="flex gap-3">
+                  <a href="https://github.com/AvernusVenine/MGS-Glacial-Geochemistry" class="text-blue-400 hover:text-blue-300 underline text-sm">GitHub</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+      
+      <section id="research" class="mb-8 bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700" data-aos="fade-up" data-aos-delay="400">
+        <h2 class="text-2xl font-semibold mb-6">Research</h2>
+        <div class="space-y-4">
+          
+          <!-- Paper 1 -->
+          <div class="research-item bg-gray-700 bg-opacity-60 p-5 rounded-lg border border-gray-600 hover:bg-opacity-80 transition-all duration-300" data-tags="lua,machine-learning,neural-networks">
+            <h3 class="text-lg font-semibold text-blue-300 mb-2">Genetic Algorith Learning and Game Adaptation (GALAGA)</h3>
+            <!-- <p class="text-gray-400 text-sm mb-2">Published in , 2024</p> -->
+            <p class="text-gray-300 mb-3">
+              A look into Genetic Neural Networks based off of the NEAT framework through applications to a classic arcade game, Galaga.
+            </p>
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span class="tag-filter px-3 py-1 text-sm bg-indigo-600 bg-opacity-70 text-indigo-200 rounded-full">Lua</span>
+              <span class="tag-filter px-3 py-1 text-sm bg-green-600 bg-opacity-70 text-green-200 rounded-full">Machine Learning</span>
+              <span class="tag-filter px-3 py-1 text-sm bg-yellow-600 bg-opacity-70 text-yellow-200 rounded-full">Neural Networks</span>
+            </div>
+            <div class="flex gap-3">
+              <a href="pdfs/galaga.pdf" class="text-blue-400 hover:text-blue-300 underline text-sm">PDF</a>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <section id="contact" class="mb-8 bg-gray-800 bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700 text-center" data-aos="fade-up" data-aos-delay="500">
         <h2 class="text-2xl font-semibold mb-4">Contact</h2>
-        <p>Email: <a href="mailto:you@example.com" class="text-blue-400 hover:text-blue-300 underline">you@example.com</a></p>
+        <p>Email: <a href="mailto:sturm113@umn.edu" class="text-blue-400 hover:text-blue-300 underline">sturm113@umn.edu</a></p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/tate-sturm-3134a3134/" class="text-blue-400 hover:text-blue-300 underline">Tate Sturm</a></p>
+        <p>GitHub: <a href="https://github.com/AvernusVenine" class="text-blue-400 hover:text-blue-300 underline">AvernusVenine</a></p>
       </section>
-
-      <footer class="mt-10 text-gray-500 text-sm" data-aos="fade-up" data-aos-delay="1000">
+      
+      <footer class="mt-8 text-gray-500 text-sm text-center" data-aos="fade-up" data-aos-delay="600">
         © 2025 Tate Sturm
       </footer>
-
     </div>
   </div>
 
+  <!-- tsParticles library v2 -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2/tsparticles.bundle.min.js"></script>
   <!-- AOS library -->
   <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  
   <script>
-    AOS.init({ duration: 1000, once: true });
-  </script>
+    // Profile switching functionality
+    function switchProfile(profileType) {
+      // Hide all profile content
+      const allProfileContent = document.querySelectorAll('.profile-content');
+      allProfileContent.forEach(content => {
+        content.style.display = 'none';
+      });
+      
+      // Remove active state from all profile pics
+      const allProfilePics = document.querySelectorAll('.profile-pic');
+      allProfilePics.forEach(pic => {
+        pic.classList.remove('active');
+      });
+      
+      // Show selected profile content
+      const selectedContent = document.getElementById(`about-${profileType}`);
+      if (selectedContent) {
+        selectedContent.style.display = 'block';
+      }
+      
+      // Add active state to clicked profile pic
+      const selectedPic = document.querySelector(`[data-profile="${profileType}"]`);
+      if (selectedPic) {
+        selectedPic.classList.add('active');
+      }
+      
+      console.log('Switched to profile:', profileType);
+    }
 
-  <!-- Initialize particles AFTER DOM is ready -->
-  <script>
-    tsParticles.load("tsparticles", {
-      background: { color: { value: "#111111" } },
-      particles: {
-        number: { value: 80 },
-        color: { value: "#ffffff" },
-        opacity: { value: 0.6 },
-        size: { value: 3 },
-        move: { enable: true, speed: 1, direction: "none", random: true },
-        links: { enable: true, distance: 120, color: "#ffffff", opacity: 0.3, width: 1 }
-      },
-      interactivity: { events: { onhover: { enable: true, mode: "grab" } } }
+    // Initialize AOS with faster, more flowing animations
+    AOS.init({ 
+      duration: 800, 
+      once: true, 
+      offset: 50,
+      easing: 'ease-out-cubic'
     });
-  </script>
+    
+    // Initialize particles and ensure all elements are loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize particles
+      tsParticles.load("tsparticles", {
+        background: { 
+          color: { value: "transparent" }
+        },
+        particles: {
+          number: { value: 80, density: { enable: true, value_area: 800 } },
+          color: { value: "#64748b" },
+          opacity: { 
+            value: 0.4,
+            random: false,
+            anim: { enable: false }
+          },
+          size: { 
+            value: 5,
+            random: true,
+            anim: { enable: false }
+          },
+          move: { 
+            enable: true, 
+            speed: .75, 
+            direction: "none", 
+            random: true,
+            straight: false,
+            out_mode: "bounce",
+            bounce: false
+          },
+          line_linked: { 
+            enable: true, 
+            distance: 150, 
+            color: "#64748b", 
+            opacity: 0.2, 
+            width: 2,
+          }
+        },
+        interactivity: { 
+          detect_on: "canvas",
+          events: { 
+            onhover: { enable: true, mode: "grab" },
+            onclick: { enable: true, mode: "push" },
+            resize: true
+          },
+          modes: {
+            grab: { distance: 200, line_linked: { opacity: 0.4 } },
+            push: { particles_nb: 4 }
+          }
+        },
+        retina_detect: true
+      }).then(function(container) {
+        console.log("tsParticles loaded successfully");
+      }).catch(function(error) {
+        console.error("Error loading tsParticles:", error);
+      });
 
+      // Initialize tag filtering after all content is loaded
+      initializeTagFiltering();
+      
+      // Set human profile as default active
+      switchProfile('human');
+    });
+
+    // Smooth scroll to section (keeping for potential future use)
+    function scrollToSection(sectionId) {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+
+    // Tag filtering functionality
+    let activeTag = null;
+
+    function initializeTagFiltering() {
+      // Add click event listeners to all tag filters
+      const tagFilters = document.querySelectorAll('.tag-filter');
+      tagFilters.forEach(tag => {
+        tag.addEventListener('click', function() {
+          const selectedTag = this.getAttribute('data-tag');
+          filterByTag(selectedTag);
+        });
+      });
+      
+      console.log('Tag filtering initialized with', tagFilters.length, 'tags');
+    }
+
+    function filterByTag(tag) {
+      // Wait a moment to ensure DOM is fully loaded
+      setTimeout(() => {
+        const projectItems = document.querySelectorAll('.project-item');
+        const researchItems = document.querySelectorAll('.research-item');
+        const tagFilters = document.querySelectorAll('.tag-filter');
+
+        console.log('Filtering by tag:', tag);
+        console.log('Found project items:', projectItems.length);
+        console.log('Found research items:', researchItems.length);
+
+        // If clicking the same tag, clear the filter
+        if (activeTag === tag) {
+          clearAllFilters();
+          return;
+        }
+
+        // Set new active tag
+        activeTag = tag;
+
+        // Update tag visual states
+        tagFilters.forEach(tagEl => {
+          tagEl.classList.remove('active');
+          if (tagEl.getAttribute('data-tag') === tag) {
+            tagEl.classList.add('active');
+          }
+        });
+
+        // Filter project items
+        projectItems.forEach(item => {
+          const itemTags = item.getAttribute('data-tags');
+          if (itemTags && itemTags.split(',').includes(tag)) {
+            item.classList.remove('item-hidden');
+          } else {
+            item.classList.add('item-hidden');
+          }
+        });
+
+        // Filter research items
+        researchItems.forEach(item => {
+          const itemTags = item.getAttribute('data-tags');
+          if (itemTags && itemTags.split(',').includes(tag)) {
+            item.classList.remove('item-hidden');
+          } else {
+            item.classList.add('item-hidden');
+          }
+        });
+      }, 100);
+    }
+
+    function clearAllFilters() {
+      activeTag = null;
+      
+      // Show all items
+      const allItems = document.querySelectorAll('.project-item, .research-item');
+      allItems.forEach(item => {
+        item.classList.remove('item-hidden');
+      });
+
+      // Remove active state from all tags
+      const tagFilters = document.querySelectorAll('.tag-filter');
+      tagFilters.forEach(tag => {
+        tag.classList.remove('active');
+      });
+      
+      console.log('All filters cleared');
+    }
+  </script>
 </body>
 </html>

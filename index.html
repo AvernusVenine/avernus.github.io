@@ -3,45 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Name | Portfolio</title>
+  <title>Tate Sturm | Portfolio</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    /* Particles background */
+    #tsparticles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: #111; /* dark background */
+    }
+  </style>
+
+  <!-- tsParticles library -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@3/tsparticles.bundle.min.js"></script>
 </head>
-<body class="bg-gray-100 text-gray-900 font-sans">
-  <header class="bg-white shadow p-6">
-    <h1 class="text-3xl font-bold">Hi, I’m Your Name 👋</h1>
-    <p class="text-lg text-gray-600">Developer • Researcher • Creator</p>
-  </header>
 
-  <main class="p-6 space-y-10">
-    <!-- About Section -->
-    <section>
-      <h2 class="text-2xl font-semibold mb-2">About Me</h2>
-      <p class="text-gray-700">
-        I’m passionate about building projects with machine learning, games, and data science. 
-        This page is my hub for projects, writing, and contact info.
-      </p>
-    </section>
+<body class="bg-gray-900 text-gray-100 font-sans">
 
-    <!-- Projects Section -->
-    <section>
-      <h2 class="text-2xl font-semibold mb-2">Projects</h2>
-      <ul class="list-disc ml-6 space-y-2">
-        <li><a href="https://github.com/your-username/project1" class="text-blue-600 hover:underline">Project 1</a> – Short description here</li>
-        <li><a href="https://github.com/your-username/project2" class="text-blue-600 hover:underline">Project 2</a> – Short description here</li>
-      </ul>
-    </section>
+  <!-- Particles div -->
+  <div id="tsparticles"></div>
 
-    <!-- Contact Section -->
-    <section>
-      <h2 class="text-2xl font-semibold mb-2">Contact</h2>
-      <p>Email: <a href="mailto:youremail@example.com" class="text-blue-600 hover:underline">youremail@example.com</a></p>
-      <p>GitHub: <a href="https://github.com/your-username" class="text-blue-600 hover:underline">@your-username</a></p>
-      <p>LinkedIn: <a href="https://linkedin.com/in/your-profile" class="text-blue-600 hover:underline">linkedin.com/in/your-profile</a></p>
-    </section>
-  </main>
+  <!-- Content wrapper -->
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="max-w-2xl text-center p-8">
 
-  <footer class="bg-white border-t mt-10 p-4 text-center text-gray-600">
-    © 2025 Your Name
-  </footer>
+      <header class="mb-10" data-aos="fade-up">
+        <h1 class="text-4xl font-bold mb-2">Tate Sturm</h1>
+        <p class="text-lg text-gray-400">Machine Learning • Mathematics • Data Science</p>
+      </header>
+
+      <section class="mb-10" data-aos="fade-up" data-aos-delay="250">
+        <p class="text-gray-300">
+          I love working on machine learning, game AI, and data-driven projects.  
+          This site is where I share my work, ideas, and ways to connect.
+        </p>
+      </section>
+
+      <section class="mb-10" data-aos="fade-up" data-aos-delay="500">
+        <h2 class="text-2xl font-semibold mb-4">Projects</h2>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-blue-400 hover:text-blue-300 underline">Project 1</a></li>
+          <li><a href="#" class="text-blue-400 hover:text-blue-300 underline">Project 2</a></li>
+        </ul>
+      </section>
+
+      <section data-aos="fade-up" data-aos-delay="750">
+        <h2 class="text-2xl font-semibold mb-4">Contact</h2>
+        <p>Email: <a href="mailto:you@example.com" class="text-blue-400 hover:text-blue-300 underline">you@example.com</a></p>
+      </section>
+
+      <footer class="mt-10 text-gray-500 text-sm" data-aos="fade-up" data-aos-delay="1000">
+        © 2025 Tate Sturm
+      </footer>
+
+    </div>
+  </div>
+
+  <!-- AOS library -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({ duration: 1000, once: true });
+  </script>
+
+  <!-- Initialize particles AFTER DOM is ready -->
+  <script>
+    tsParticles.load("tsparticles", {
+      background: { color: { value: "#111111" } },
+      particles: {
+        number: { value: 80 },
+        color: { value: "#ffffff" },
+        opacity: { value: 0.6 },
+        size: { value: 3 },
+        move: { enable: true, speed: 1, direction: "none", random: true },
+        links: { enable: true, distance: 120, color: "#ffffff", opacity: 0.3, width: 1 }
+      },
+      interactivity: { events: { onhover: { enable: true, mode: "grab" } } }
+    });
+  </script>
+
 </body>
 </html>
